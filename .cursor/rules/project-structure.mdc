@@ -1,0 +1,80 @@
+---
+description: Enforce and maintain the existing Candle Fort project structure
+alwaysApply: true
+---
+
+# Candle Fort — Project Structure Rules
+
+## 1. Follow the Existing Structure
+- Before adding any feature, inspect the existing folder structure and relevant files.
+- Follow the current project architecture, naming conventions, and coding style.
+- Do not create a new folder or file if an appropriate existing location already exists.
+- Do not reorganize the project or rename existing files unless necessary.
+- Keep the project simple and beginner-friendly. This is a small e-commerce store with an admin dashboard.
+
+## 2. Rules for Adding New Features
+- Every new file must be placed in the appropriate existing folder.
+- Store reusable UI components in `src/components/`.
+- Store storefront and admin pages in `src/pages/` and `src/pages/admin/`, respectively.
+- Store Firebase operations in `src/services/`.
+- Store shared authentication and cart state in `src/context/`.
+- Store reusable React hooks in `src/hooks/`.
+- Store shared helper functions in `src/utils/`.
+- Store route protection in `src/routes/`.
+- Store images, fonts, and other frontend assets in `src/assets/`.
+- Follow the existing conventions if the actual folder names differ from these examples.
+
+## 3. Update Existing Files When Necessary
+- Before creating a new file, check whether the feature can be implemented cleanly in an existing file.
+- When adding a new page, update the existing router in `src/App.jsx` or the project's current routing file.
+- When adding a new shared component, reuse it wherever appropriate.
+- When adding a Firebase feature, update the relevant service file instead of scattering Firebase calls throughout components.
+- When adding authentication or cart functionality, integrate with the existing context rather than creating duplicate contexts.
+- Update imports, navigation links, route definitions, and related components whenever required.
+- Update configuration and environment example files when a new environment variable is introduced.
+- Update Firestore or Storage security rules when the feature requires new permissions.
+
+## 4. Keep the Structure Clean
+- Do not create duplicate components, services, contexts, utilities, or configuration files.
+- Do not create unnecessary nested folders or files for one-line functions.
+- Do not put the entire application in `App.jsx`.
+- Do not place business logic, Firebase operations, and complex UI code together unnecessarily.
+- Do not install new dependencies without checking whether existing packages can solve the problem.
+- Do not create additional architectural layers unless the feature genuinely requires them.
+- Keep filenames consistent with the existing project's naming convention.
+
+## 5. Storefront and Admin Separation
+- Keep customer-facing pages separate from admin pages.
+- Keep admin-specific components and functionality inside the existing admin structure.
+- Reuse shared components where appropriate instead of duplicating them.
+- Protect admin routes using the existing authentication system.
+- Enforce admin permissions using trusted backend authorization and Firebase security rules. Frontend route protection alone is not sufficient.
+- Never expose private credentials or trusted server secrets in frontend files.
+
+## 6. Maintain the Project Structure
+- Whenever you add, remove, rename, or move a file, check whether imports, routes, configuration, and related references need updating.
+- If a new folder or file becomes necessary, place it according to the existing architecture.
+- Update `README.md` with significant structural or setup changes when appropriate.
+- Do not generate a separate architecture document for every feature.
+- Do not move files simply to make the structure look different.
+
+## 7. Before Completing Every Task
+Verify the following:
+1. New files are in the correct locations.
+2. Existing files were reused where appropriate.
+3. Imports and routes are correct.
+4. No duplicate or unused files were introduced.
+5. Existing functionality has not been unnecessarily changed.
+6. Firebase security rules and backend authorization remain appropriate.
+7. The application builds successfully when the available environment allows it.
+
+## 8. Required Workflow
+For every new feature:
+1. Inspect the existing structure.
+2. Identify the files that need to be created or updated.
+3. Implement the feature within the existing architecture.
+4. Update related imports, routes, and configuration.
+5. Run relevant checks or a build when possible.
+6. Report which files were created, updated, or removed.
+
+**Final rule:** Always extend the existing Candle Fort project structure instead of inventing a new one. Keep changes minimal, consistent, secure, and easy to maintain.

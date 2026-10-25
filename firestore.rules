@@ -1,0 +1,65 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn() && request.auth.token.admin == true;
+    }
+
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /orders/{orderId} {
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly([
+          'userId',
+          'items',
+          'paymentMethod',
+          'transactionReference',
+          'receiptUrl',
+          'shippingAddress',
+          'status',
+          'createdAt'
+        ])
+        && request.resource.data.keys().hasAll([
+          'userId',
+          'items',
+          'paymentMethod',
+          'transactionReference',
+          'receiptUrl',
+          'shippingAddress',
+          'status',
+          'createdAt'
+        ])
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.paymentMethod in ['cod', 'manual']
+        && request.resource.data.items is list
+        && request.resource.data.items.size() > 0
+        && request.resource.data.shippingAddress is map
+        && request.resource.data.status == 'pending'
+        && request.resource.data.createdAt is string
+        && (
+          (
+            request.resource.data.paymentMethod == 'cod'
+            && request.resource.data.transactionReference == null
+          )
+          || (
+            request.resource.data.transactionReference is string
+            && request.resource.data.transactionReference.size() > 0
+          )
+        )
+        && (
+          request.resource.data.receiptUrl == null
+          || request.resource.data.receiptUrl is string
+        );
+      allow read: if isAdmin()
+        || (signedIn() && resource.data.userId == request.auth.uid);
+      allow update, delete: if isAdmin();
+    }
+  }
+}

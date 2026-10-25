@@ -1,0 +1,24 @@
+---
+description: React project conventions and guidance for the installed core packages
+globs: "src/**/*.{js,jsx}"
+alwaysApply: true
+---
+
+# React project conventions
+
+- This project uses React 19, Vite, and JavaScript/JSX. Use function components and React hooks; do not migrate to TypeScript unless requested.
+- Prefer small, focused components and keep state local unless multiple parts of the UI need to share it.
+- Use semantic HTML and accessible labels, keyboard interactions, and visible focus states.
+
+## Installed packages
+
+- Use `react-router` for client-side routes when the app has multiple pages. Keep route configuration in one place; do not use full-page navigation for internal links. Avoid adding routing complexity to a genuinely single-page view.
+- Use `@tanstack/react-query` for remote/server data. Set up a shared `QueryClient` and `QueryClientProvider` when query hooks are introduced. Use stable query keys and handle loading, error, and empty states. Do not mirror query data in component state.
+- Use `react-hook-form` with `zod` and `zodResolver` from `@hookform/resolvers/zod` for forms that need validation. Keep validation rules in a Zod schema and show accessible field-level errors.
+- Use named icons from `lucide-react` instead of hand-written SVGs or emoji for interface icons. Give meaningful icons accessible labels and mark decorative icons as hidden from assistive technology.
+
+## Dependency guidance
+
+- Add a dependency only when it directly solves the task; do not force these packages into features that do not need them.
+- Prefer browser and React APIs for simple cases. Do not add another router, data-fetching, form, icon, CSS, or global-state library without a concrete need and user approval.
+- Keep package usage consistent with existing project patterns, and do not introduce Tailwind-specific utilities unless Tailwind is explicitly added.
