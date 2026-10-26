@@ -1,23 +1,13 @@
 import { Link } from 'react-router'
 import { Heart, ShoppingCart, Star } from 'lucide-react'
 import { useCart } from '../../context/CartContext.jsx'
-
-function formatPrice(price) {
-  return `Rs. ${Number(price || 0).toLocaleString('en-PK', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`
-}
+import { formatCurrency } from '../../utils/formatCurrency.js'
 
 function ProductCard({ product }) {
   const { addItem } = useCart()
   const rating = Number(product.rating ?? 5)
   const image = product.imageUrl || product.image || ''
-  const isPlaceholder = String(product.id).startsWith('placeholder') ||
-    String(product.id).startsWith('rv-')
-
   function handleAdd() {
-    if (isPlaceholder) return
     addItem(
       {
         id: product.id,
@@ -39,11 +29,7 @@ function ProductCard({ product }) {
       </div>
       <div className="product-card-body">
         <h3>
-          {isPlaceholder ? (
-            product.name
-          ) : (
-            <Link to={`/products/${product.id}`}>{product.name}</Link>
-          )}
+          <Link to={`/products/${product.id}`}>{product.name}</Link>
         </h3>
         <div className="product-rating" aria-label={`${rating} out of 5 stars`}>
           {Array.from({ length: 5 }, (_, index) => (
@@ -55,16 +41,15 @@ function ProductCard({ product }) {
             />
           ))}
         </div>
-        <p className="product-price">{formatPrice(product.price)}</p>
+        <p className="product-price">{formatCurrency(product.price)}</p>
         <div className="product-actions">
-          <button type="button" className="cf-btn" onClick={handleAdd} disabled={isPlaceholder}>
+          <button type="button" className="cf-btn" onClick={handleAdd}>
             Add to Cart
           </button>
           <button
             type="button"
             className="cf-btn icon-add"
             onClick={handleAdd}
-            disabled={isPlaceholder}
             aria-label="Quick add to cart"
           >
             <ShoppingCart size={16} aria-hidden="true" />

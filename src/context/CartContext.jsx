@@ -1,9 +1,19 @@
-import { createContext, useContext, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 const CartContext = createContext(null)
 
 export function CartProvider({ children }) {
-  const [items, setItems] = useState([])
+  const [items, setItems] = useState(() => {
+    try {
+      return JSON.parse(window.localStorage.getItem('candlefort-cart') || '[]')
+    } catch {
+      return []
+    }
+  })
+
+  useEffect(() => {
+    window.localStorage.setItem('candlefort-cart', JSON.stringify(items))
+  }, [items])
 
   function addItem(product, quantity = 1) {
     if (!product?.id) {
@@ -34,6 +44,10 @@ export function CartProvider({ children }) {
     )
   }
 
+  function clearCart() {
+    setItems([])
+  }
+
   function updateQuantity(productId, quantity) {
     if (!Number.isInteger(quantity) || quantity < 1) {
       throw new Error('Cart quantity must be a positive whole number.')
@@ -53,7 +67,7 @@ export function CartProvider({ children }) {
       0,
     )
 
-    return { items, itemCount, subtotal, addItem, removeItem, updateQuantity }
+    return { items, itemCount, subtotal, addItem, removeItem, updateQuantity, clearCart }
   }, [items])
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

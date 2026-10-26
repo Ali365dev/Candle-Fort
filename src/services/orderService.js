@@ -5,6 +5,7 @@ import {
   orderBy,
   query,
   setDoc,
+  updateDoc,
   where,
 } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
@@ -83,16 +84,11 @@ export async function getCustomerOrders(userId) {
     throw new Error('A customer user id is required to load orders.')
   }
   const { db } = requireFirebase()
-  const ordersQuery = query(
-    collection(db, 'orders'),
-    where('userId', '==', userId),
-    orderBy('createdAt', 'desc'),
-  )
+  const ordersQuery = query(collection(db, 'orders'), where('userId', '==', userId))
   const snapshot = await getDocs(ordersQuery)
-  return snapshot.docs.map((orderDoc) => ({
-    id: orderDoc.id,
-    ...orderDoc.data(),
-  }))
+  return snapshot.docs
+    .map((orderDoc) => ({ id: orderDoc.id, ...orderDoc.data() }))
+    .sort((first, second) => String(second.createdAt).localeCompare(String(first.createdAt)))
 }
 
 export async function getAdminOrders() {
@@ -106,4 +102,16 @@ export async function getAdminOrders() {
     id: orderDoc.id,
     ...orderDoc.data(),
   }))
+}
+
+export async function updateOrderStatus(orderId, status) {
+  const allowedStatuses = ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled']
+  if (!allowedStatuses.includes(status)) {
+    throw new Error('Choose a valid order status.')
+  }
+  const { db } = requireFirebase()
+  await updateDoc(doc(db, 'orders', orderId), {
+    status,
+    updatedAt: new Date().toISOString(),
+  })
 }

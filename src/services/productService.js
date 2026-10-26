@@ -7,9 +7,25 @@ import {
   getDocs,
   updateDoc,
 } from 'firebase/firestore'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { requireFirebase } from './firebase.js'
 
 const productsCollection = 'products'
+const MAX_PRODUCT_IMAGE_SIZE = 10 * 1024 * 1024
+
+export async function uploadProductImage(file) {
+  const { storage } = requireFirebase()
+  if (!file?.type.startsWith('image/')) {
+    throw new Error('Choose an image file for the product photo.')
+  }
+  if (file.size > MAX_PRODUCT_IMAGE_SIZE) {
+    throw new Error('Product images must be 10 MB or smaller.')
+  }
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '-')
+  const imageRef = ref(storage, `product-images/${Date.now()}-${safeName}`)
+  const uploaded = await uploadBytes(imageRef, file)
+  return getDownloadURL(uploaded.ref)
+}
 
 export async function getProducts() {
   const { db } = requireFirebase()

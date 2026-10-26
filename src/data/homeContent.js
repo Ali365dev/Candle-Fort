@@ -22,7 +22,6 @@ import img31 from '../assets/images/image-31.webp'
 import img32 from '../assets/images/image-32.webp'
 import img33 from '../assets/images/image-33.webp'
 import img35 from '../assets/images/image-35.webp'
-import img37 from '../assets/images/image-37.webp'
 import img38 from '../assets/images/image-38.webp'
 import img39 from '../assets/images/image-39.webp'
 import img41 from '../assets/images/image-41.webp'
@@ -81,37 +80,42 @@ export const placeholderProducts = [
   {
     id: 'placeholder-1',
     name: 'Purple Berry Cake Candle',
-    price: 1750,
-    imageUrl: img32,
+    price: 1700,
+    imageUrl: img10,
     rating: 5,
+    category: 'cake',
   },
   {
     id: 'placeholder-2',
-    name: 'Strawberry Drip Cake Candle',
-    price: 1650,
+    name: 'Dessert Dream Candle',
+    price: 1700,
     imageUrl: img2,
     rating: 5,
+    category: 'cake',
   },
   {
     id: 'placeholder-3',
-    name: 'Pink Glitter Cake Candle',
-    price: 1850,
-    imageUrl: img13,
-    rating: 4,
+    name: 'Gift Box Cake Candle',
+    price: 1700,
+    imageUrl: img11,
+    rating: 5,
+    category: 'gift',
   },
   {
     id: 'placeholder-4',
-    name: 'Red Velvet HBD Candle',
-    price: 1950,
-    imageUrl: img28,
+    name: 'Cute Cake Candle',
+    price: 1700,
+    imageUrl: img14,
     rating: 5,
+    category: 'cake',
   },
   {
     id: 'placeholder-5',
-    name: 'Fruit Topping Cake Candle',
-    price: 1750,
-    imageUrl: img37,
+    name: 'Mehndi Candle Set',
+    price: 1700,
+    imageUrl: img17,
     rating: 5,
+    category: 'gift',
   },
 ]
 

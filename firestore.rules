@@ -14,6 +14,31 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    match /{collectionName}/{document=**} {
+      allow read: if collectionName in [
+        'categories',
+        'subcategories',
+        'blogs',
+        'blogCategories',
+        'pages',
+        'colors',
+        'sizeVariants',
+        'shippingMethods',
+        'shippingRates',
+        'sliders',
+        'middleSliders',
+        'featuredCategories',
+        'featuredProducts',
+        'featuredBlogs',
+        'marketingSections',
+        'overlays',
+        'appSettings',
+        'aboutUs',
+        'themeSettings'
+      ];
+      allow create, update, delete: if isAdmin();
+    }
+
     match /orders/{orderId} {
       allow create: if signedIn()
         && request.resource.data.keys().hasOnly([

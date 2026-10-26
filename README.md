@@ -32,10 +32,11 @@ the same claim for privileged reads and writes. Set that claim only from trusted
 backend code using the Firebase Admin SDK; this project does not create admin
 accounts or assign roles in the browser.
 
-Checkout currently supports only Cash on Delivery (`cod`) and manual payment
-(`manual`). Manual payment requires a transaction reference and may include an
-image or PDF receipt. Order submission is a placeholder until customer details
-and the checkout flow are implemented.
+The storefront supports customer email/password accounts, a persistent cart,
+and checkout with Cash on Delivery (`cod`) or manual payment (`manual`). Manual
+payment requires a transaction reference and may include an image or PDF
+receipt. Checkout saves delivery details and the order to Firestore. Customer
+accounts must be enabled in Firebase Authentication before sign-up can be used.
 
 ## Project layout
 

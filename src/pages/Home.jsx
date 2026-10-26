@@ -1,28 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import {
-  BestSellers,
-  BrandStory,
-  CategoryGrid,
-  GiftBanner,
-  Guides,
-  HeroSection,
-  InstagramFeed,
-  NewsletterFaq,
-  OccasionGrid,
-  PromoDuo,
-  RecentlyViewed,
-  ScentsBanner,
-  SeasonalBanner,
-  Testimonials,
-  TrustBar,
-} from '../components/home/HomeSections.jsx'
-import {
-  placeholderProducts,
-  recentlyViewedFallback,
-} from '../data/homeContent.js'
+import { placeholderProducts } from '../data/homeContent.js'
 import { firebaseConfigured } from '../services/firebase.js'
 import { getProducts } from '../services/productService.js'
 import { normalizeProduct, withFallbackImage } from '../utils/formatProduct.js'
+import CandleFortLanding from '../components/home/CandleFortLanding.jsx'
 
 function Home() {
   const productsQuery = useQuery({
@@ -33,6 +14,7 @@ function Home() {
   })
 
   const liveProducts = (productsQuery.data ?? [])
+    .filter((product) => product.active !== false)
     .map(normalizeProduct)
     .map((product, index) =>
       withFallbackImage(
@@ -49,26 +31,10 @@ function Home() {
   const recentlyViewed =
     liveProducts.length > 1
       ? liveProducts.slice(0, 4)
-      : recentlyViewedFallback
+      : placeholderProducts.slice(1, 5)
 
   return (
-    <main>
-      <HeroSection />
-      <TrustBar />
-      <CategoryGrid />
-      <ScentsBanner />
-      <GiftBanner />
-      <BestSellers products={bestSellers} />
-      <SeasonalBanner />
-      <OccasionGrid />
-      <PromoDuo />
-      <BrandStory />
-      <Testimonials />
-      <InstagramFeed />
-      <RecentlyViewed products={recentlyViewed} />
-      <Guides />
-      <NewsletterFaq />
-    </main>
+    <CandleFortLanding products={bestSellers} recentlyViewed={recentlyViewed} />
   )
 }
 

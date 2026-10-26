@@ -1,111 +1,29 @@
+import { Globe, MessageCircle, Phone, Share2 } from 'lucide-react'
 import { Link } from 'react-router'
-import { Globe, Share2, Video } from 'lucide-react'
 import { logo } from '../../data/homeContent.js'
+
+const currentYear = new Date().getFullYear()
 
 function Footer() {
   return (
-    <footer className="site-footer" id="contact">
-      <div className="cf-container">
-        <div className="footer-grid">
-          <div className="footer-brand">
-            <img src={logo} alt="Candle Fort" />
-            <p>
-              Premium handcrafted candles made to light up your moments — elegant,
-              fragrant, and gift-ready.
-            </p>
-            <div className="social-links">
-              <a href="https://facebook.com" aria-label="Facebook" target="_blank" rel="noreferrer">
-                <Share2 size={16} aria-hidden="true" />
-              </a>
-              <a
-                href="https://instagram.com"
-                aria-label="Instagram"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Globe size={16} aria-hidden="true" />
-              </a>
-              <a href="https://youtube.com" aria-label="YouTube" target="_blank" rel="noreferrer">
-                <Video size={16} aria-hidden="true" />
-              </a>
-            </div>
-          </div>
-
-          <div className="footer-col">
-            <h3>Quick Links</h3>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/shop">Shop</Link>
-              </li>
-              <li>
-                <a href="#blog">Blog</a>
-              </li>
-              <li>
-                <a href="#contact">Contact</a>
-              </li>
-            </ul>
-          </div>
-
-          <div className="footer-col">
-            <h3>Shop by Category</h3>
-            <ul>
-              <li>
-                <Link to="/shop?category=cake">Cake Candles</Link>
-              </li>
-              <li>
-                <Link to="/shop?category=jar">Jar Candles</Link>
-              </li>
-              <li>
-                <Link to="/shop?category=gift">Gift Sets</Link>
-              </li>
-              <li>
-                <Link to="/shop?category=scented">Scented Candles</Link>
-              </li>
-            </ul>
-          </div>
-
-          <div className="footer-col">
-            <h3>Customer Care</h3>
-            <ul>
-              <li>
-                <a href="#track">Track Order</a>
-              </li>
-              <li>
-                <a href="#shipping">Shipping Info</a>
-              </li>
-              <li>
-                <a href="#returns">Returns</a>
-              </li>
-              <li>
-                <a href="#faq">FAQs</a>
-              </li>
-            </ul>
-          </div>
-
-          <div className="footer-col">
-            <h3>Contact Info</h3>
-            <ul>
-              <li>hello@candlefort.com</li>
-              <li>+92 300 0000000</li>
-              <li>Pakistan</li>
-            </ul>
-          </div>
+    <>
+      <section className="landing-newsletter">
+        <div className="landing-container"><strong>Let’s keep in touch! Get email offers &amp; the latest news from us</strong>
+          <form onSubmit={(event) => event.preventDefault()}><label className="sr-only" htmlFor="newsletter-email">Your email</label><input id="newsletter-email" type="email" required placeholder="Enter your E-mail" /><button type="submit">Subscribe</button></form>
         </div>
-
-        <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} Candle Fort. All rights reserved.</p>
-          <div className="payment-row" aria-label="Accepted payments">
-            <span className="payment-pill">COD</span>
-            <span className="payment-pill">VISA</span>
-            <span className="payment-pill">MC</span>
-            <span className="payment-pill">JazzCash</span>
+      </section>
+      <footer className="site-footer" id="footer">
+        <div className="cf-container">
+          <div className="footer-grid">
+            <div className="footer-brand"><img src={logo} alt="Candle Fort" /><p>Candle Fort was created with a passion for the warmth, comfort, and beauty that candles bring into our lives. We believe a candle is more than just a source of light — it’s a way to create an atmosphere, express your style, and make ordinary moments feel special.</p></div>
+            <div className="footer-col"><h3>Policies</h3><ul><li><Link to="/returns">Refund / Return Policy</Link></li><li><Link to="/about">About Us</Link></li><li><Link to="/contact">Contact Us</Link></li><li><Link to="/blog">Blogs</Link></li></ul></div>
+            <div className="footer-col"><h3>Contact Info</h3><ul><li><a href="tel:+923210000262"><Phone size={13} /> +923210000262</a></li><li><a href="mailto:candlefort@gmail.com">candlefort@gmail.com</a></li></ul><h3 className="footer-social-title">Follow Us</h3><div className="social-links"><a href="https://facebook.com" aria-label="Facebook"><Share2 size={17} /></a><a href="https://instagram.com" aria-label="Instagram"><Globe size={17} /></a><a href="https://wa.me/923210000262" aria-label="WhatsApp"><MessageCircle size={17} /></a></div></div>
           </div>
+          <div className="footer-bottom"><span>CandleFort © {currentYear}. All Rights Reserved</span><span>Powered by : <a href="#footer">CommCart</a></span></div>
         </div>
-      </div>
-    </footer>
+      </footer>
+      <a className="whatsapp-float" href="https://wa.me/923210000262" aria-label="Chat with Candle Fort on WhatsApp"><MessageCircle size={21} /></a>
+    </>
   )
 }
 
